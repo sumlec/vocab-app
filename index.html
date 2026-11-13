@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>例文ボキャブ</title>
+<meta name="theme-color" content="#3d5fc4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ボキャブ">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{-webkit-tap-highlight-color:transparent}
+body{margin:0;font-size:14px}
+img{max-width:100%}
+[hidden]{display:none!important}
+:root{
+  --bg:#f3f6fc; --surface:#ffffff; --ink:#1b2236; --muted:#5d6684; --line:#d9e0ef;
+  --accent:#3d5fc4; --accent-ink:#ffffff; --accent-soft:#e2e9fa;
+  --again:#c2412d; --hard:#a86d12; --good:#2b7a4b; --easy:#3d5fc4;
+  --f-jp:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-en:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10131b; --surface:#191e2a; --ink:#e6e9f2; --muted:#98a1bb; --line:#2b3245;
+  --accent:#8aa4ff; --accent-ink:#0f1424; --accent-soft:#222b45;
+  --again:#ef7a66; --hard:#e0aa4e; --good:#6cc391; --easy:#8aa4ff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10131b; --surface:#191e2a; --ink:#e6e9f2; --muted:#98a1bb; --line:#2b3245;
+  --accent:#8aa4ff; --accent-ink:#0f1424; --accent-soft:#222b45;
+  --again:#ef7a66; --hard:#e0aa4e; --good:#6cc391; --easy:#8aa4ff; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-jp);font-size:15px;line-height:1.7;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:640px;margin:0 auto;padding-block:16px 48px;display:flex;flex-direction:column;gap:16px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:18px;margin:0;letter-spacing:.02em;text-wrap:balance}
+h1 small{font-family:var(--f-mono);font-size:11px;color:var(--muted);font-weight:400;margin-left:6px}
+nav{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:3px}
+nav button{border:0;background:none;color:var(--muted);font:inherit;font-size:13px;padding:4px 12px;border-radius:6px;cursor:pointer}
+nav button[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink);font-weight:700}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.muted{color:var(--muted)}
+.small{font-size:12.5px}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:8px;cursor:pointer;font-size:14px}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.stat b{display:block;font-family:var(--f-mono);font-size:20px;font-variant-numeric:tabular-nums}
+.stat span{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+/* study card */
+.meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px}
+.chip{border-radius:999px;padding:1px 9px;font-size:11.5px;font-weight:700;letter-spacing:.04em;background:var(--accent-soft);color:var(--accent)}
+.chip.s3{background:transparent;border:1px solid var(--accent)}
+.num{font-family:var(--f-mono);color:var(--muted);font-size:12px}
+.sent{border-left:5px solid var(--accent);background:var(--accent-soft);padding:10px 14px;border-radius:0 6px 6px 0}
+.sent .en{font-family:var(--f-en);font-size:19px;line-height:1.5}
+.sent .ja{font-size:13.5px;color:var(--muted);margin-top:4px}
+.blank{display:inline-block;min-width:4.5em;border-bottom:2px solid var(--accent);color:transparent}
+mark{background:none;color:var(--accent);font-weight:600}
+.q{font-size:16px}
+.q .word{font-family:var(--f-en);font-size:28px;font-weight:600;line-height:1.25;display:block}
+.q .hint{color:var(--muted);font-size:13.5px}
+.ans{border-top:1px dashed var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px}
+.ans .word{font-family:var(--f-en);font-size:24px;font-weight:600}
+.pron{font-family:var(--f-en);color:var(--muted);font-size:14px}
+.pos{display:inline-block;border:1px solid currentColor;border-radius:3px;font-size:11px;padding:0 3px;line-height:1.4;margin-right:4px;color:var(--muted)}
+ol.senses{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:4px}
+.lbl{font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-right:4px}
+.key{color:var(--accent);font-weight:700}
+.bold{font-weight:700}
+.en-list{font-family:var(--f-en);font-size:15.5px}
+.core{font-size:13px;color:var(--muted)}
+.speak{border:1px solid var(--line);background:none;color:var(--accent);border-radius:6px;padding:2px 8px;cursor:pointer;font-size:12px}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.grades button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 4px;cursor:pointer;color:var(--ink);font-size:13.5px;line-height:1.3}
+.grades button small{display:block;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.grades .g1{border-color:var(--again)} .grades .g1 b{color:var(--again)}
+.grades .g2 b{color:var(--hard)} .grades .g3 b{color:var(--good)} .grades .g4 b{color:var(--easy)}
+.reveal{width:100%}
+.plan{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.plan>div{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+.plan .num{margin-left:auto}
+.debug{font-size:12px;border:1px dashed var(--hard);color:var(--hard);border-radius:6px;padding:6px 10px}
+.sent.gen{border-left-style:dashed;background:transparent;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ja-big{font-size:17px;font-weight:500}
+ul.hw{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+ul.hw li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:5px}
+.miss{font-size:11px;font-weight:700;color:var(--again);border:1px solid var(--again);border-radius:999px;padding:0 7px}
+.okng{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.okng button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:10px 4px;cursor:pointer;font-size:16px;line-height:1.3}
+.okng button small{display:block;font-size:11.5px;color:var(--muted)}
+.okng .ng{border-color:var(--again)} .okng .ng b{color:var(--again)}
+.okng .ok{border-color:var(--good)} .okng .ok b{color:var(--good)}
+.picks{display:flex;flex-wrap:wrap;gap:6px}
+.pick{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer;font-family:var(--f-en);font-size:15px}
+.pick[aria-pressed="true"]{border-color:var(--again);background:var(--again);color:var(--surface)}
+/* progress */
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:6px 6px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-weight:500;color:var(--muted);font-size:11.5px;letter-spacing:.04em}
+.tbl{overflow-x:auto}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;min-width:70px}
+.bar i{display:block;height:100%;background:var(--accent)}
+textarea{width:100%;box-sizing:border-box;min-height:90px;font-family:var(--f-mono);font-size:11.5px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px}
+input[type=number]{width:5em;font:inherit;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 6px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:8px;font-size:13px}
+.empty h2{font-size:16px;margin:0}
+ul.plain{margin:0;padding-left:1.2em}
+@media (prefers-reduced-motion:no-preference){.ans{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+@media (hover:none){.kbd{display:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>例文ボキャブ</h1>
+    <nav aria-label="表示切替">
+      <button id="nav-study" aria-pressed="true">学習</button>
+      <button id="nav-progress" aria-pressed="false">進捗</button>
+      <button id="nav-data" aria-pressed="false">データ</button>
+    </nav>
+  </header>
+  <main id="view"></main>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+"use strict";
+const LS = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ return false; } }
+};
+let DATA = {};   // { "1": sectionJson, ... } アプリに同梱
+let META = null;
+let LOAD = "loading";
+let AUDIO_SECS = new Set();
+let PROG = LS.get("vb.progress", {});      // { cardId: {ivl,ease,due,reps,lapses} }
+let SET  = Object.assign({minutes:30, secsPerDay:5, newPerDay:40, extraMinutes:10, debug:false}, LS.get("vb.settings", {}));
+let GEN = {};                               // { "sec:例文No": [作り置き英文...] }（1文に複数の対象語）
+let BAD = LS.get("vb.bad", {});           // おかしいと報告された作り置き英文
+let GENUSE = LS.get("vb.genuse", {});     // 作り置き英文ごとの出題回数
+let MISS = LS.get("vb.miss", {});        // { "sec:見出し語No": {n, last} } 浮かばなかった見出し語
+let DAYLOG = LS.get("vb.daylog", {});      // { day: {new:n, rev:n} }
+const save = () => { LS.set("vb.progress", PROG); LS.set("vb.daylog", DAYLOG); LS.set("vb.miss", MISS); LS.set("vb.bad", BAD); LS.set("vb.genuse", GENUSE); };
+
+const POS = {"動":"動詞","名":"名詞","形":"形容詞","副":"副詞","前":"前置詞","接":"接続詞","助":"助動詞","感":"感嘆詞","代":"代名詞","頭":"接頭語","尾":"接尾語","構":"構文","定":"定型表現"};
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let DAYOFF = LS.get("vb.dayOffset", 0);   // デバッグ用：日付を何日進めているか
+const today = () => Math.floor((Date.now() - 4*3600e3 - new Date().getTimezoneOffset()*60e3) / 86400e3) + DAYOFF;
+const dayLabel = d => { const x = new Date((d * 86400e3) + 4*3600e3); return `${x.getUTCMonth()+1}/${x.getUTCDate()}`; };
+const live = arr => (arr||[]).filter(w => !String(w).startsWith("*"));
+const toast = msg => { const t = document.getElementById("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(()=>t.hidden = true, 2200); };
+
+const player = new Audio();
+// 音声は Section ごとに1ファイル（data/audio/sNN.mp3）。TIMES[例文No] = [sec, 開始秒, 終了秒]
+let TIMES = {}, stopAt = null;
+const audioSrc = (sec, sid) => AUDIO_SECS.has(+sec) && TIMES[sid] ? AUDIO_URL[sec] : null;
+function watchStop(){
+  if (stopAt == null) return;
+  if (player.currentTime >= stopAt){ player.pause(); stopAt = null; return; }
+  requestAnimationFrame(watchStop);
+}
+function playSentence(sec, sid, text){
+  const src = audioSrc(sec, sid);
+  if (!src){ speak(text); return; }
+  const [, a, b] = TIMES[sid];
+  const start = () => { player.currentTime = a; stopAt = b;
+    player.play().then(() => requestAnimationFrame(watchStop)).catch(() => { stopAt = null; toast("音声を再生できませんでした。読み上げで代用します"); speak(text); }); };
+  if (player.src !== src){ player.src = src; player.preload = "auto"; player.addEventListener("loadedmetadata", start, {once:true}); player.load(); }
+  else start();
+}
+function speak(text){
+  try{
+    const u = new SpeechSynthesisUtterance(String(text).replace(/\.\.\.|[¹²~]|\([^)]*\)/g," ").replace(/\s+/g," "));
+    u.lang = "en-US"; u.rate = 0.95; speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){ toast("この端末では読み上げが使えません"); }
+}
+
+/* ---------- card generation ---------- */
+// STEP1 = 例文カード（1文1枚）。STEP3 = 見出し語ごとの派生語・関連語・同意語・反意語など。
+function buildCards(){
+  const cards = [];
+  Object.keys(DATA).map(Number).sort((a,b)=>a-b).forEach(sec => {
+    DATA[sec].sentences.forEach(s => {
+      const sentId = `${sec}:s${s.id}`;
+      cards.push({sec, s, id:sentId, kind:"sent", step:1, group:sentId});
+      s.entries.forEach(e => {
+        const base = {sec, s, e, sentId, group:`${sec}:${e.no}`, step:3};
+        if (e.senses.some(x => x.rank === "bold")) cards.push({...base, id:`${sec}:${e.no}:bold`, kind:"bold"});
+        (e.related||[]).forEach((r,i) => { if (!r.word.startsWith("*")) cards.push({...base, r, id:`${sec}:${e.no}:rel${i}`, kind:"rel"}); });
+        e.senses.forEach((x,i) => {
+          if ((x.rank === "key" || x.rank === "bold") && (live(x.syn).length || (x.ant||[]).some(a => live(a.w).length)))
+            cards.push({...base, sense:x, id:`${sec}:${e.no}:sa${i}`, kind:"sa"});
+        });
+        if ((e.confusables||[]).length) cards.push({...base, id:`${sec}:${e.no}:conf`, kind:"conf"});
+      });
+    });
+  });
+  return cards;
+}
+const keySense = e => e.senses.find(x => x.rank === "key") || e.senses[0];
+const senseLine = x => `${x.label ? `<span class="lbl">${esc(x.label)}</span>` : ""}${x.frame ? esc(x.frame) : ""}<span class="${x.rank||""}">${esc(x.ja)}</span>`;
+// 例文の和訳がOKになったら、その例文の見出し語の STEP3 カードを解放
+const unlocked = c => c.step === 1 || PROG[c.sentId]?.last === "ok";
+
+/* ---------- 記録 ---------- */
+// どのカードも OK / NG の2択。日付による間隔計算はせず、Section が周回で回ってきたときに出題する。
+const mark = (st, ok) => ({reps: (st?.reps || 0) + 1, ng: (st?.ng || 0) + (ok ? 0 : 1), last: ok ? "ok" : "ng", day: today()});
+
+/* ---------- session ---------- */
+// 1日の流れ：① 今日の5 Section の例文を全部 → ② 残り時間で同じ Section の派生語・関連語など
+// 周回方式：Section を順に N 個ずつ進む。休んだ日があっても続きから始まる。
+// ② は「前回NG → まだ出ていないカード → 前回OK（古い順）」の優先順で、時間の許す分だけ出題する。
+let session = null;   // {phase, secs, q, i, stage, picked, played, start, shownAt, budget}
+let LAP  = Object.assign({next:1, lap:1, doneDay:null, lastSecs:[]}, LS.get("vb.lap", {}));
+let AVG  = Object.assign({sent:12, s3:12}, LS.get("vb.avg", {}));   // 1枚あたりの実測秒数（移動平均）
+const saveLap = () => { LS.set("vb.lap", LAP); LS.set("vb.avg", AVG); };
+const loadedSecs = () => Object.keys(DATA).map(Number).sort((a,b)=>a-b);
+function todaySecs(){
+  const secs = loadedSecs(); if (!secs.length) return [];
+  let i = secs.findIndex(s => s >= LAP.next); if (i < 0) i = 0;
+  const out = [];
+  for (let k = 0; k < Math.min(SET.secsPerDay, secs.length); k++) out.push(secs[(i + k) % secs.length]);
+  return out;
+}
+const passDone = () => LAP.doneDay === today();
+// 前回OKの例文は、同じ例文から作った「派生語・関連語を複数含む英文」に差し替える。
+// 前回NGの語を多く含む文 → まだ出ていない語を多く含む文 の順で選ぶ（同点なら出題回数の少ない文）。
+// 前回NG・未出題の語を1つも含む文がなければ、元の例文をそのまま出す。
+function genFor(sc, cards){
+  const byId = new Map(cards.filter(c => c.sentId === sc.id).map(c => [c.id, c]));
+  let best = null, bestScore = 0;
+  for (const it of GEN[`${sc.sec}:${sc.s.id}`] || []){
+    if (BAD[it.id]) continue;
+    const ts = it.t.map(t => ({...t, card: byId.get(t.card)})).filter(t => t.card);
+    const score = ts.reduce((n, t) => n + (PROG[t.card.id]?.last === "ng" ? 100 : !PROG[t.card.id] ? 1 : 0), 0);
+    if (score > bestScore || (score === bestScore && best && (GENUSE[it.id] || 0) < (GENUSE[best.it.id] || 0)))
+      if (score > 0){ best = {it, ts}; bestScore = score; }
+  }
+  if (!best) return null;
+  return {sec: sc.sec, s: sc.s, id: sc.id, kind: "gen", step: 1, group: sc.group, item: best.it, targets: best.ts};
+}
+function sentencePlan(){
+  const secs = todaySecs(), cards = buildCards();
+  const main = cards.filter(c => c.step === 1 && secs.includes(c.sec));
+  return {secs, main, ng: []};   // NGの例文は、その Section が次の周回で回ってきたときに出る
+}
+// 同じ見出し語のカードが続かないよう、各見出し語の1枚目→2枚目…の順に並べる
+function spread(list){
+  const rank = new Map(), cnt = {};
+  list.forEach(c => { cnt[c.group] = (cnt[c.group] || 0) + 1; rank.set(c, cnt[c.group]); });
+  return list.map((c, i) => [c, i]).sort((a,b) => rank.get(a[0]) - rank.get(b[0]) || a[1] - b[1]).map(x => x[0]);
+}
+// 例文NGで「浮かばなかった」と選んだ見出し語のカード。OKになるまで、その Section の日の②の先頭に出る。
+function weakHeadwords(secs, skipToday){
+  const t = today(), out = [];
+  secs.forEach(sec => DATA[sec]?.sentences.forEach(s => s.entries.forEach(e => {
+    const k = `${sec}:${e.no}`, m = MISS[k], id = `${k}:hw`, st = PROG[id];
+    if (!m || (skipToday && st?.day === t)) return;
+    if (!st || st.last === "ng" || m.last > st.day) out.push({sec, s, e, id, kind:"hw", step:1, group:k, miss:m.n});
+  })));
+  return out.sort((a,b) => b.miss - a.miss);
+}
+function step3Plan(seconds, secs, skipToday){
+  const t = today();
+  const hw = weakHeadwords(secs, skipToday);
+  const cards = buildCards().filter(c => c.step === 3 && secs.includes(c.sec) && unlocked(c) && !(skipToday && PROG[c.id]?.day === t));
+  const n = Math.max(0, Math.floor(seconds / AVG.s3));
+  const ng = spread(cards.filter(c => PROG[c.id]?.last === "ng"));
+  const fresh = spread(cards.filter(c => !PROG[c.id])).slice(0, SET.newPerDay);
+  const ok = spread(cards.filter(c => PROG[c.id]?.last === "ok").sort((a,b) => PROG[a.id].day - PROG[b.id].day));
+  const q = [...hw, ...ng, ...fresh, ...ok].slice(0, Math.max(n, hw.length));
+  const rest = q.filter(c => c.kind !== "hw");
+  const count = k => rest.filter(c => k === "new" ? !PROG[c.id] : PROG[c.id]?.last === k).length;
+  return {q, hw: q.length - rest.length, ng: count("ng"), fresh: count("new"), ok: count("ok"), total: cards.length};
+}
+const mins = s => s <= 0 ? 0 : Math.max(1, Math.round(s / 60));
+const extraSecs = () => passDone() && LAP.lastSecs?.length ? LAP.lastSecs : todaySecs();
+function startSession(withSentences){
+  const now = Date.now();
+  if (withSentences){
+    const {secs, main, ng} = sentencePlan();
+    session = {phase:1, secs, q:[...ng, ...main], i:0, stage:"q", picked:new Set(), played:-1, start:now, budget: SET.minutes * 60};
+  } else {
+    session = {phase:2, secs: extraSecs(), q: step3Plan(SET.extraMinutes * 60, extraSecs(), true).q, i:0, stage:"q", picked:new Set(), played:-1, start:now, budget: SET.extraMinutes * 60};
+  }
+  if (!session.q.length){ session = null; toast("出題できるカードがありません"); }
+  render();
+}
+function endPhase1(){
+  LAP.prev = {next: LAP.next, lap: LAP.lap};   // 「今日をやり直す」用
+  const secs = session.secs, all = loadedSecs(), last = secs[secs.length - 1];
+  const j = all.indexOf(last) + 1;
+  if (j >= all.length){ LAP.next = all[0]; LAP.lap++; } else LAP.next = all[j];
+  LAP.doneDay = today(); LAP.lastSecs = secs; saveLap();
+  const left = session.budget - (Date.now() - session.start) / 1000;
+  const q = step3Plan(Math.max(0, left), secs, true).q;   // ①で出した語は今日はもう出さない
+  if (!q.length){ session = null; toast("今日の学習が終わりました"); return render(); }
+  toast("例文が終わりました。派生語・関連語などに進みます");
+  Object.assign(session, {phase:2, q, i:0, stage:"q"});
+  renderCard();
+}
+
+/* ---------- views ---------- */
+const view = document.getElementById("view");
+let current = "study";
+function go(v){ current = v; ["study","progress","data"].forEach(n => document.getElementById("nav-"+n).setAttribute("aria-pressed", n === v)); render(); }
+["study","progress","data"].forEach(n => document.getElementById("nav-"+n).onclick = () => go(n));
+
+function render(){
+  if (LOAD !== "ok" || !Object.keys(DATA).length) return renderEmpty();
+  if (current === "study") return session ? renderCard() : renderHome();
+  if (current === "progress") return renderProgress();
+  renderData();
+}
+
+function renderEmpty(){
+  if (LOAD === "loading"){ view.innerHTML = `<section class="panel empty"><h2>準備しています…</h2></section>`; return; }
+  view.innerHTML = `<section class="panel empty">
+    <h2>はじめに：単語データを読み込む</h2>
+    ${LOAD === "error" ? `<p class="small" style="color:var(--again);margin:0">保存済みのデータを開けませんでした。もう一度読み込んでください。</p>` : ""}
+    <p class="small" style="margin:0">お手持ちの <b>vocab-data.pack</b>（単語データと音声、約30MB）を選んでください。読み込みは最初の1回だけです。</p>
+    <ol class="small muted" style="margin:0;padding-left:1.3em">
+      <li>Mac から AirDrop か iCloud Drive で、このファイルを iPhone に送る</li>
+      <li>下のボタンを押し、「ファイル」アプリからそのファイルを選ぶ</li>
+    </ol>
+    <label class="btn primary" for="pack" style="text-align:center">vocab-data.pack を選ぶ</label>
+    <input type="file" id="pack" hidden>
+    <p class="small muted" id="packMsg" style="margin:0">データはこの端末の中だけに保存され、外部には送られません。</p>
+  </section>`;
+  document.getElementById("pack").onchange = async ev => {
+    const f = ev.target.files[0]; if (!f) return;
+    const msg = document.getElementById("packMsg");
+    try{
+      msg.textContent = "読み込んでいます…";
+      await importPack(f, t => msg.textContent = t);
+      LOAD = "loading"; render(); await loadData(); toast("単語データを読み込みました");
+    }catch(e){
+      console.error(e);
+      msg.textContent = e.message === "format"
+        ? "このファイルは vocab-data.pack ではないようです。ファイルを確認してください。"
+        : "保存できませんでした。端末の空き容量（約60MB必要）を確認して、もう一度試してください。";
+    }
+  };
+}
+
+function renderHome(){
+  const {secs, main, ng} = sentencePlan();
+  const lapDay = Math.floor(loadedSecs().indexOf(secs[0]) / SET.secsPerDay) + 1;
+  const lapDays = Math.ceil(loadedSecs().length / SET.secsPerDay);
+  const sentSec = (main.length + ng.length) * AVG.sent;
+  const p3 = step3Plan(Math.max(0, SET.minutes * 60 - sentSec), secs, false);
+  const done = passDone();
+  const extra = step3Plan(SET.extraMinutes * 60, extraSecs(), true);
+  view.innerHTML = `<section class="panel">
+    ${SET.debug ? `<div class="debug"><div>デバッグ：いまの日付は ${dayLabel(today())}${DAYOFF ? `（実際の今日から +${DAYOFF}日）` : ""}</div>
+      <div class="row" style="margin-top:6px"><button class="btn small" id="dbgNext">翌日へ進める</button><button class="btn small" id="dbgRedo">今日をやり直す</button>${DAYOFF ? `<button class="btn small" id="dbgBack">実際の今日に戻す</button>` : ""}<button class="btn small" id="dbgReset">履歴をクリアして最初に戻る</button></div>
+      <div class="row small" id="dbgConfirm" hidden style="margin-top:6px"><span>学習記録・苦手な語・周回・日付をすべて消して、初日の状態に戻します。元に戻せません。</span>
+        <button class="btn small" id="dbgResetYes" style="border-color:var(--again);color:var(--again)">消して最初に戻る</button><button class="btn small" id="dbgResetNo">やめる</button></div></div>` : ""}
+    <div class="meta"><span class="chip">第${LAP.lap}周</span><span>${lapDays}日で1周</span><span class="num" style="margin-left:auto">収録 ${loadedSecs().length} Section</span></div>
+    ${done ? `<h2 style="font-size:16px;margin:0">今日の学習は終わりました</h2>
+      <p class="muted small" style="margin:0">次回は Section ${todaySecs().join("・")} から始まります。</p>
+      <button class="btn" id="extra" ${extra.q.length ? "" : "disabled"}>派生語などを追加で${SET.extraMinutes}分やる（${extra.q.length}枚）</button>`
+    : `<div class="plan">
+        <div><span class="lbl">①</span><b>例文</b>　Section ${secs.join("・")}<span class="muted">（${main.length}文${main.filter(c => c.kind === "gen").length ? `、うち新しい英文 ${main.filter(c => c.kind === "gen").length}` : ""}${ng.length ? `＋前回NG ${ng.length}文` : ""}）</span><span class="num">約${mins(sentSec)}分</span></div>
+        <div><span class="lbl">②</span><b>派生語・関連語など</b><span class="muted">（${p3.hw ? `苦手な見出し語 ${p3.hw}枚＋` : ""}前回NG ${p3.ng}枚＋新規 ${p3.fresh}枚＋前回OK ${p3.ok}枚）</span><span class="num">約${mins(p3.q.length * AVG.s3)}分</span></div>
+      </div>
+      <button class="btn primary" id="start">学習を始める（約${SET.minutes}分）</button>`}
+    <p class="muted small" style="margin:0">例文の和訳が OK になると、その例文の派生語・関連語・同意語・反意語が②に出るようになります。②は前回NGだったカードを優先し、枚数は、残り時間とこれまでの解答ペース（例文 ${Math.round(AVG.sent)}秒/文、派生語など ${Math.round(AVG.s3)}秒/枚）から自動で決まります。</p>
+  </section>`;
+  const st = document.getElementById("start"); if (st) st.onclick = () => startSession(true);
+  const setOff = n => { DAYOFF = n; LS.set("vb.dayOffset", DAYOFF); renderHome(); };
+  const dn = document.getElementById("dbgNext"); if (dn) dn.onclick = () => { setOff(DAYOFF + 1); toast(`${dayLabel(today())} の学習に切り替えました`); };
+  const db = document.getElementById("dbgBack"); if (db) db.onclick = () => { setOff(0); toast("実際の今日に戻しました"); };
+  const rs = document.getElementById("dbgReset");
+  if (rs){
+    rs.onclick = () => document.getElementById("dbgConfirm").hidden = false;
+    document.getElementById("dbgResetNo").onclick = () => document.getElementById("dbgConfirm").hidden = true;
+    document.getElementById("dbgResetYes").onclick = () => {
+      PROG = {}; MISS = {}; GENUSE = {}; DAYLOG = {}; DAYOFF = 0;
+      LAP = {next:1, lap:1, doneDay:null, lastSecs:[]}; AVG = {sent:12, s3:12};
+      save(); saveLap(); LS.set("vb.dayOffset", 0); session = null;
+      toast("履歴をクリアして最初の状態に戻しました"); renderHome();
+    };
+  }
+  const dr = document.getElementById("dbgRedo"); if (dr) dr.onclick = () => {
+    if (LAP.doneDay === today() && LAP.prev){ LAP.next = LAP.prev.next; LAP.lap = LAP.prev.lap; }
+    LAP.doneDay = null; saveLap(); renderHome(); toast("今日の例文パートをやり直せるようにしました（カードの記録は残ります）");
+  };
+  const ex = document.getElementById("extra"); if (ex) ex.onclick = () => startSession(false);
+}
+
+// 例文中の見出し語を青で示す
+function markSentence(s){
+  const en = s.en, ranges = [];
+  s.entries.forEach(e => { const i = en.indexOf(e.surface); if (i >= 0) ranges.push([i, i + e.surface.length]); });
+  ranges.sort((a,b) => a[0] - b[0]);
+  let out = "", pos = 0;
+  for (const [a,b] of ranges){ if (a < pos) continue; out += esc(en.slice(pos, a)) + `<mark>${esc(en.slice(a, b))}</mark>`; pos = b; }
+  return out + esc(en.slice(pos));
+}
+const missOf = c => MISS[`${c.sec}:${c.e?.no}`]?.n || 0;
+
+function prompt(c){
+  const e = c.e, k = e && keySense(e);
+  const no = e ? `<span class="num">□${e.no}</span>` : "";
+  switch (c.kind){
+    case "gen": {
+      const it = c.item, ranges = [];
+      c.targets.forEach(t => { const k = it.en.indexOf(t.w); if (k >= 0) ranges.push([k, k + t.w.length]); });
+      ranges.sort((a,b) => a[0] - b[0]);
+      let html = "", pos = 0;
+      for (const [a,b] of ranges){ if (a < pos) continue; html += esc(it.en.slice(pos, a)) + `<mark>${esc(it.en.slice(a, b))}</mark>`; pos = b; }
+      html += esc(it.en.slice(pos));
+      return `<div class="sent gen"><div class="en">${html}</div></div>
+              <div class="row"><button class="speak" data-say="${esc(it.en)}">▶ 読み上げ</button><span class="hint muted small">和訳が頭に浮かびますか？</span></div>`;
+    }
+    case "sent":
+      return `<div class="sent"><div class="en">${markSentence(c.s)}</div></div>
+              <div class="row"><button class="speak" id="replay">▶ もう一度聞く</button><span class="hint muted small">和訳が頭に浮かびますか？</span></div>`;
+    case "hw": return `<div class="q"><span class="word">${esc(e.word)}</span><span class="hint">${no} 例文での意味は？ <span class="miss">苦手 ×${c.miss}</span></span></div>`;
+    case "bold": return `<div class="q"><span class="word">${esc(e.word)}</span><span class="hint">${no} 例文の意味「${esc(k.ja)}」以外の重要な意味は？（${e.senses.filter(x=>x.rank==="bold").length}つ）</span></div>`;
+    case "rel": {
+      const r = c.r;
+      if (r.same) return `<div class="q"><span class="word">${esc(r.word)}</span><span class="hint">${no} ${esc(e.word)} と同じ綴りの<b>${POS[r.pos]||r.pos}</b>。意味は？</span></div>`;
+      return `<div class="q"><span class="hint">${no} ${esc(e.word)}（${esc(k.ja)}）の関連${r.type === "phrase" ? "熟語" : "語"}　<span class="pos">${esc(r.pos)}</span></span>
+              <span class="word" style="font-family:var(--f-jp);font-size:20px">${esc(r.senses[0].ja)}</span><span class="hint">英語で言うと？</span></div>`;
+    }
+    case "sa": {
+      const x = c.sense, ns = live(x.syn).length, na = (x.ant||[]).reduce((n,a)=>n + live(a.w).length, 0);
+      return `<div class="q"><span class="word">${esc(e.word)}</span><span class="hint">${no}「${esc(x.ja)}」の意味で</span>
+              <div class="row" style="margin-top:6px">${ns ? `<span class="chip">同意語 ${ns}</span>` : ""}${na ? `<span class="chip">反意語 ${na}</span>` : ""}</div>
+              <span class="hint">をできるだけ挙げてください</span></div>`;
+    }
+    case "conf": return `<div class="q"><span class="word">${esc(e.confusables.map(x=>x.w).join(" / "))}</span><span class="hint">${no} ${esc(e.word.replace(/\s*\(.*$/,""))}（${esc(k.ja)}）と紛らわしい語。それぞれの意味は？</span></div>`;
+  }
+}
+
+function headBlock(w, pron, kana){
+  return `<div class="row"><span class="word">${esc(w)}</span><button class="speak" data-say="${esc(w)}">▶ 発音</button></div>
+    ${pron ? `<div class="pron">[${esc(pron)}] ${kana ? `<span class="small">（${esc(kana)}）</span>` : ""}</div>` : ""}`;
+}
+function answer(c){
+  const e = c.e;
+  const senses = list => `<ol class="senses">${list.map(x => `<li><span class="pos">${esc(x.pos)}</span>${senseLine(x)}${live(x.syn).length ? ` <span class="en-list muted">(${esc(live(x.syn).join(" / "))})</span>` : ""}</li>`).join("")}</ol>`;
+  switch (c.kind){
+    case "gen": {
+      return `<div class="ja-big">${esc(c.item.ja)}</div>
+        <ul class="hw">${c.targets.map(t => {
+          const tc = t.card, w = tc.kind === "rel" ? tc.r : null;
+          const ja = w ? w.senses.map(x => x.ja).join(" / ") : tc.e.senses.filter(x => x.rank === "bold").map(x => x.ja).join(" / ");
+          const st = PROG[tc.id];
+          return `<li><span class="en-list"><b>${esc(t.w.replace(/[,.]$/,""))}</b></span><span class="pos">${esc(w ? w.pos : tc.e.pos)}</span><span>${esc(ja)}</span>
+            <span class="small muted">← ${esc(tc.e.word)}</span>${st?.last === "ng" ? `<span class="miss">前回NG</span>` : !st ? `<span class="chip">初</span>` : ""}</li>`;
+        }).join("")}</ul>
+        <div class="small muted">例文 ${c.s.id}「${esc(c.s.en)}」から</div>
+        <div><button class="btn small" id="bad">この文はおかしい（今後出さない）</button></div>`;
+    }
+    case "sent":
+      return `<div class="ja-big">${esc(c.s.ja)}</div>
+        <ul class="hw">${c.s.entries.map(x => {
+          const m = MISS[`${c.sec}:${x.no}`]?.n || 0;
+          return `<li><span class="num">□${x.no}</span><span class="en-list"><b>${esc(x.word)}</b></span><span>${esc(keySense(x).ja)}</span>${m ? `<span class="miss">苦手 ×${m}</span>` : ""}</li>`;
+        }).join("")}</ul>`;
+    case "hw":
+      return headBlock(e.word, e.pron, e.kana) + senses(e.senses.map(x=>({...x, pos:e.pos}))) +
+        `${e.core ? `<div class="core">【${esc(e.core)}】</div>` : ""}${e.note ? `<div class="core">《${esc(e.note)}》</div>` : ""}` +
+        `<div class="sent"><div class="en">${markSentence(c.s)} <button class="speak" data-sent="1">▶ 例文</button></div><div class="ja">${esc(c.s.ja)}</div></div>`;
+    case "bold":
+      return headBlock(e.word, e.pron, e.kana) + senses(e.senses.map(x=>({...x, pos:e.pos}))) +
+        `${e.core ? `<div class="core">【${esc(e.core)}】</div>` : ""}${e.note ? `<div class="core">《${esc(e.note)}》</div>` : ""}`;
+    case "rel": {
+      const r = c.r;
+      return headBlock(r.word) + senses(r.senses.map(x=>({...x, pos:r.pos}))) + (r.note ? `<div class="core">《${esc(r.note)}》</div>` : "") +
+        `<div class="small muted">見出し語：${esc(e.word)}（${esc(keySense(e).ja)}）</div>`;
+    }
+    case "sa": {
+      const x = c.sense;
+      return `<div class="row"><span class="word">${esc(e.word)}</span><span class="muted">「${esc(x.ja)}」</span></div>
+        ${live(x.syn).length ? `<div><span class="chip">同意語</span> <span class="en-list">${esc(live(x.syn).join(" / "))}</span></div>` : ""}
+        ${(x.ant||[]).filter(a=>live(a.w).length).map(a => `<div><span class="chip s3">反意語</span> <span class="en-list">${esc(live(a.w).join(" / "))}</span> <span class="muted">${esc(a.ja)}</span></div>`).join("")}`;
+    }
+    case "conf":
+      return e.confusables.map(x => `<div>${headBlock(x.w, x.pron, x.kana)}<div>${esc(x.ja)}</div></div>`).join("") +
+        `<div class="small muted">${esc(e.word)}：${esc(keySense(e).ja)}</div>`;
+  }
+}
+const KIND = {hw:"苦手な見出し語", gen:"新しい英文の和訳", sent:"例文の和訳", bold:"重要な別の意味", rel:"派生語・関連語", sa:"同意語・反意語", conf:"紛らわしい語"};
+
+function renderCard(){
+  const c = session.q[session.i];
+  if (!c){ session = null; toast("今日の学習が終わりました"); return render(); }
+  const st = c.kind === "gen" ? {} : PROG[c.id];
+  let actions;
+  if (session.stage === "q"){
+    actions = `<button class="btn primary reveal" id="reveal">${c.kind === "sent" || c.kind === "gen" ? "和訳を確認" : "答えを見る"} <span class="small kbd">(Space)</span></button>`;
+  } else if (c.kind === "gen" && session.stage === "a"){
+    actions = `<div class="okng"><button class="ng" id="ngG"><b>NG</b><small>浮かばなかった</small></button><button class="ok" id="okG"><b>OK</b><small>浮かんだ</small></button></div>`;
+  } else if (c.kind === "gen" && session.stage === "pick"){
+    actions = `<p class="small" style="margin:0"><b>浮かばなかった語</b>をタップしてください（複数可）</p>
+      <div class="picks">${c.targets.map((t, i) => `<button class="pick" data-gpick="${i}" aria-pressed="${session.picked.has(i)}">${esc(t.w.replace(/[,.]$/,""))}</button>`).join("")}</div>
+      <button class="btn primary" id="gcommit">記録して次へ${session.picked.size ? `（${session.picked.size}語）` : ""}</button>`;
+  } else if (c.kind === "sent" && session.stage === "a"){
+    actions = `<div class="okng"><button class="ng" id="ng"><b>NG</b><small>浮かばなかった</small></button><button class="ok" id="ok"><b>OK</b><small>浮かんだ</small></button></div>`;
+  } else if (c.kind === "sent" && session.stage === "pick"){
+    actions = `<p class="small" style="margin:0"><b>浮かばなかった見出し語</b>をタップしてください（複数可）</p>
+      <div class="picks">${c.s.entries.map(x => `<button class="pick" data-pick="${x.no}" aria-pressed="${session.picked.has(x.no)}"><span class="num">□${x.no}</span> ${esc(x.word)}</button>`).join("")}</div>
+      <button class="btn primary" id="commit">記録して次へ${session.picked.size ? `（${session.picked.size}語）` : ""}</button>`;
+  } else {
+    actions = `<div class="okng"><button class="ng" id="ng3"><b>NG</b><small>出てこなかった</small></button><button class="ok" id="ok3"><b>OK</b><small>出てきた</small></button></div>`;
+  }
+  view.innerHTML = `<section class="panel">
+    <div class="meta"><span class="chip ${c.step === 3 ? "s3" : ""}">STEP${c.step}</span><span>${KIND[c.kind]}</span>
+      <span class="num">Section ${c.sec} ・ 例文 ${c.s.id}</span><span class="num" style="margin-left:auto">${session.phase === 1 ? "①例文" : "②派生語など"} ${session.i + 1}/${session.q.length} ・ <span id="clock"></span></span></div>
+    ${prompt(c)}
+    ${session.stage !== "q" ? `<div class="ans">${answer(c)}</div>` : ""}
+    ${actions}
+    <div class="row"><button class="btn small" id="quit">中断する</button>${!st ? `<span class="chip">新規</span>` : st.last === "ng" ? `<span class="miss">前回NG</span>` : ""}</div>
+  </section>`;
+  view.querySelectorAll("[data-say]").forEach(b => b.onclick = () => speak(b.dataset.say));
+  const $ = id => document.getElementById(id);
+  if ($("replay")) $("replay").onclick = () => playSentence(c.sec, c.s.id, c.s.en);
+  view.querySelectorAll("[data-sent]").forEach(b => b.onclick = () => playSentence(c.sec, c.s.id, c.s.en));
+  if ($("reveal")) $("reveal").onclick = reveal;
+  if ($("ok")) $("ok").onclick = () => gradeSent(true);
+  if ($("ng")) $("ng").onclick = () => { session.stage = "pick"; renderCard(); };
+  view.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => {
+    const n = +b.dataset.pick; session.picked.has(n) ? session.picked.delete(n) : session.picked.add(n); renderCard();
+  });
+  if ($("commit")) $("commit").onclick = () => {
+    const t = today();
+    session.picked.forEach(n => { const k = `${c.sec}:${n}`; MISS[k] = {n: (MISS[k]?.n || 0) + 1, last: t}; });
+    gradeSent(false);
+  };
+  if ($("okG")) $("okG").onclick = () => gradeGen(true);
+  if ($("ngG")) $("ngG").onclick = () => { session.stage = "pick"; renderCard(); };
+  view.querySelectorAll("[data-gpick]").forEach(b => b.onclick = () => {
+    const n = +b.dataset.gpick; session.picked.has(n) ? session.picked.delete(n) : session.picked.add(n); renderCard();
+  });
+  if ($("gcommit")) $("gcommit").onclick = () => gradeGen(false);
+  if ($("bad")) $("bad").onclick = () => { BAD[c.item.id] = true; save(); toast("この文は今後出題しません"); advance(); };
+  if ($("ok3")) $("ok3").onclick = () => grade(true);
+  if ($("ng3")) $("ng3").onclick = () => grade(false);
+  $("quit").onclick = () => { try{ player.pause(); }catch(e){} session = null; render(); };
+  if (session.stage === "q") session.shownAt = Date.now();
+  tick();
+  // 例文カードは表示と同時に音声を自動再生
+  if (c.kind === "sent" && session.stage === "q" && session.played !== session.i){
+    session.played = session.i; playSentence(c.sec, c.s.id, c.s.en);
+  }
+}
+function tick(){
+  const el = document.getElementById("clock"); if (!el || !session) return;
+  const s = Math.floor((Date.now() - session.start) / 1000);
+  el.textContent = `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")} / ${Math.round(session.budget/60)}:00`;
+}
+setInterval(tick, 1000);
+function reveal(){ session.stage = "a"; renderCard(); }
+function track(kind){
+  const dt = Math.min(60, (Date.now() - (session.shownAt || Date.now())) / 1000);
+  if (dt > 1) AVG[kind] = Math.round((AVG[kind] * 0.85 + dt * 0.15) * 10) / 10;
+}
+function gradeSent(ok){
+  const c = session.q[session.i], st = PROG[c.id] || {reps:0, ng:0};
+  track("sent");
+  PROG[c.id] = mark(st, ok);
+  save(); saveLap(); advance();
+}
+function gradeGen(ok){
+  // OK：含まれる語すべてOK。NG：選んだ語だけNG、残りはOK。
+  const c = session.q[session.i];
+  track("sent");
+  c.targets.forEach((t, i) => { PROG[t.card.id] = mark(PROG[t.card.id], ok || !session.picked.has(i)); });
+  GENUSE[c.item.id] = (GENUSE[c.item.id] || 0) + 1;
+  save(); saveLap(); advance();
+}
+function grade(ok){
+  const c = session.q[session.i];
+  track("s3");
+  PROG[c.id] = mark(PROG[c.id], ok);
+  save(); saveLap(); advance();
+}
+function advance(){
+  session.i++; session.stage = "q"; session.picked = new Set();
+  if (session.i >= session.q.length){
+    if (session.phase === 1) return endPhase1();
+    session = null; toast("今日の学習が終わりました"); return render();
+  }
+  if (session.phase === 2 && (Date.now() - session.start) / 1000 > session.budget + 60){
+    session = null; toast(`${SET.minutes}分を過ぎたので終了しました。続きは「追加で」から`); return render();
+  }
+  renderCard();
+}
+document.addEventListener("keydown", ev => {
+  if (current !== "study" || !session || /input|textarea|select/i.test(ev.target.tagName)) return;
+  const c = session.q[session.i]; if (!c) return;
+  if (ev.code === "Space" && session.stage === "q"){ ev.preventDefault(); reveal(); }
+  else if (c.kind === "gen" && session.stage === "a" && /^[12]$/.test(ev.key)){ if (ev.key === "2") gradeGen(true); else { session.stage = "pick"; renderCard(); } }
+  else if (c.kind === "sent" && session.stage === "a"){
+    if (ev.key === "1"){ session.stage = "pick"; renderCard(); } else if (ev.key === "2") gradeSent(true);
+  }
+  else if ((c.step === 3 || c.kind === "hw") && session.stage === "a" && /^[12]$/.test(ev.key)) grade(ev.key === "2");
+});
+
+function renderProgress(){
+  const cards = buildCards();
+  const secs = Object.keys(DATA).map(Number).sort((a,b)=>a-b);
+  const pct = (a,b) => b ? Math.round(a / b * 100) : 0;
+  const rows = secs.map(sec => {
+    const cs = cards.filter(c => c.sec === sec);
+    const s1 = cs.filter(c => c.step === 1), s3 = cs.filter(c => c.step === 3);
+    const ok = arr => arr.filter(c => PROG[c.id]?.last === "ok").length;
+    const entries = DATA[sec].sentences.reduce((n,s) => n + s.entries.length, 0);
+    return `<tr><td>${sec}</td><td>${entries}</td>
+      <td><div class="bar"><i style="width:${pct(ok(s1), s1.length)}%"></i></div></td><td class="num">${ok(s1)}/${s1.length}</td>
+      <td><div class="bar"><i style="width:${pct(ok(s3), s3.length)}%"></i></div></td><td class="num">${ok(s3)}/${s3.length}</td></tr>`;
+  }).join("");
+  const words = new Set();
+  secs.forEach(sec => DATA[sec].sentences.forEach(s => s.entries.forEach(e => {
+    words.add(e.word);
+    (e.related||[]).forEach(r => !r.word.startsWith("*") && words.add(r.word + "|" + r.pos));
+    const sw = x => { live(x.syn).forEach(w=>words.add(w)); (x.ant||[]).forEach(a=>live(a.w).forEach(w=>words.add(w))); };
+    e.senses.forEach(sw); (e.related||[]).forEach(r => r.senses.forEach(sw));
+  })));
+  const loadedSentences = secs.reduce((n, s) => n + DATA[s].sentences.length, 0);
+  view.innerHTML = `<section class="panel">
+    <div class="stats">
+      <div class="stat"><span>取り込んだ例文</span><b>${loadedSentences}<span class="small muted"> / ${META?.totals?.sentences || loadedSentences}</span></b></div>
+      <div class="stat"><span>取り込んだ語彙</span><b>${words.size}</b></div>
+      <div class="stat"><span>前回OKのカード</span><b>${cards.filter(c => PROG[c.id]?.last === "ok").length}</b></div>
+    </div>
+    <p class="muted small">それぞれ、最後に解いたときに OK だった数です。</p>
+    <div class="tbl"><table><thead><tr><th>SECTION</th><th>見出し語</th><th colspan="2">STEP1 例文</th><th colspan="2">STEP3 派生・関連・同意・反意</th></tr></thead><tbody>${rows}</tbody></table></div>
+  </section>
+  <section class="panel">
+    <h2 style="font-size:15px;margin:0">浮かばなかった見出し語</h2>
+    ${weakList()}
+  </section>`;
+}
+function weakList(){
+  const rows = Object.entries(MISS).sort((a,b) => b[1].n - a[1].n || b[1].last - a[1].last).slice(0, 30).map(([k,v]) => {
+    const [sec, no] = k.split(":").map(Number);
+    const s = DATA[sec]?.sentences.find(s => s.entries.some(e => e.no === no)); const e = s?.entries.find(e => e.no === no);
+    return e ? `<li><span class="num">□${no}</span><span class="en-list"><b>${esc(e.word)}</b></span><span>${esc(keySense(e).ja)}</span><span class="miss">×${v.n}</span></li>` : "";
+  }).join("");
+  return rows ? `<ul class="hw">${rows}</ul>` : `<p class="muted small" style="margin:0">例文で NG を押したときに選んだ見出し語が、回数の多い順にここに並びます。</p>`;
+}
+
+function renderData(){
+  const secs = Object.keys(DATA).map(Number).sort((a,b)=>a-b);
+  view.innerHTML = `<section class="panel">
+    <h2 style="font-size:15px;margin:0">単語データ</h2>
+    <div class="small">${secs.length} Section・例文 ${secs.reduce((n,s) => n + DATA[s].sentences.length, 0)}・音声 ${AUDIO_SECS.size} Section${PACK_INFO?.imported ? `（${new Date(PACK_INFO.imported).toLocaleDateString("ja-JP")} に読み込み）` : ""}</div>
+    <p class="muted small" style="margin:0">データはこの端末の中だけに保存されています。新しい vocab-data.pack を受け取ったら、入れ直してください。学習記録はそのまま残ります。</p>
+    <label class="btn" for="repack" style="text-align:center">データを入れ直す</label><input type="file" id="repack" hidden>
+    <span class="small muted" id="repackMsg"></span>
+  </section>
+  <section class="panel">
+    <h2 style="font-size:15px;margin:0">設定</h2>
+    <label class="row small">1日の学習時間 <input type="number" id="mn" min="5" max="180" value="${SET.minutes}"> 分</label>
+    <label class="row small">1日に進む Section 数 <input type="number" id="spd" min="1" max="45" value="${SET.secsPerDay}"></label>
+    <label class="row small">派生語などの新規カードの上限 <input type="number" id="npd" min="0" max="300" value="${SET.newPerDay}"> 枚/日</label>
+    <label class="row small">追加学習の時間 <input type="number" id="xm" min="1" max="120" value="${SET.extraMinutes}"> 分</label>
+    <label class="row small"><input type="checkbox" id="dbg" ${SET.debug ? "checked" : ""}> デバッグモード（ホームに「翌日へ進める」「今日をやり直す」ボタンを表示）</label>
+    <div class="row"><button class="btn small" id="lapReset">周回を Section 1 に戻す</button><span class="small muted">いま：第${LAP.lap}周・次は Section ${LAP.next}</span></div>
+  </section>
+  <section class="panel">
+    <h2 style="font-size:15px;margin:0">学習記録のバックアップ</h2>
+    <p class="muted small">記録はこのブラウザ内にだけ保存されています。下の文字列をコピーして保管しておけば、別の端末やブラウザに貼り付けて復元できます。</p>
+    <textarea id="backup" readonly></textarea>
+    <div class="row"><button class="btn" id="copy">コピー</button></div>
+    <textarea id="restore" placeholder="ここにバックアップを貼り付けて「復元」"></textarea>
+    <div class="row"><button class="btn" id="doRestore">復元</button><button class="btn" id="wipe">学習記録を消去</button></div>
+    <div id="confirmWipe" class="row small" hidden><span>学習記録をすべて消去します。元に戻せません。</span><button class="btn" id="wipeYes" style="border-color:var(--again);color:var(--again)">消去する</button><button class="btn" id="wipeNo">やめる</button></div>
+  </section>`;
+  document.getElementById("repack").onchange = async ev => {
+    const f = ev.target.files[0]; if (!f) return;
+    const msg = document.getElementById("repackMsg");
+    try{ await importPack(f, t => msg.textContent = t); await loadData(); toast("単語データを入れ直しました"); }
+    catch(e){ msg.textContent = e.message === "format" ? "vocab-data.pack ではないようです" : "保存できませんでした。空き容量を確認してください"; }
+  };
+  const bk = document.getElementById("backup");
+  bk.value = JSON.stringify({progress: PROG, settings: SET, miss: MISS, lap: LAP, avg: AVG, bad: BAD, genuse: GENUSE});
+  document.getElementById("npd").onchange = ev => { SET.newPerDay = Math.max(0, +ev.target.value || 0); LS.set("vb.settings", SET); };
+  const num = (id, key, min) => document.getElementById(id).onchange = ev => { SET[key] = Math.max(min, +ev.target.value || min); LS.set("vb.settings", SET); };
+  num("mn","minutes",5); num("spd","secsPerDay",1); num("xm","extraMinutes",1);
+  document.getElementById("dbg").onchange = ev => { SET.debug = ev.target.checked; LS.set("vb.settings", SET); toast(SET.debug ? "デバッグモードをオンにしました" : "デバッグモードをオフにしました"); };
+  document.getElementById("lapReset").onclick = () => { LAP = {next:1, lap:1, doneDay:null}; saveLap(); toast("周回を Section 1 に戻しました"); renderData(); };
+  document.getElementById("copy").onclick = () => {
+    navigator.clipboard?.writeText(bk.value).then(() => toast("コピーしました"), () => { bk.select(); toast("選択しました。手動でコピーしてください"); });
+  };
+  document.getElementById("doRestore").onclick = () => {
+    try{
+      const j = JSON.parse(document.getElementById("restore").value);
+      PROG = j.progress || {}; MISS = j.miss || {}; BAD = j.bad || {}; GENUSE = j.genuse || {}; if (j.lap) LAP = j.lap; if (j.avg) AVG = j.avg; saveLap(); SET = Object.assign(SET, j.settings || {});
+      save(); LS.set("vb.settings", SET); toast("学習記録を復元しました"); renderData();
+    }catch(e){ toast("貼り付けた内容を読めませんでした。バックアップ全体をコピーしたか確認してください"); }
+  };
+  document.getElementById("wipe").onclick = () => document.getElementById("confirmWipe").hidden = false;
+  document.getElementById("wipeNo").onclick = () => document.getElementById("confirmWipe").hidden = true;
+  document.getElementById("wipeYes").onclick = () => {
+    PROG = {}; MISS = {}; BAD = {}; GENUSE = {}; LAP = {next:1, lap:1, doneDay:null}; saveLap();
+    ["vb.progress","vb.daylog","vb.miss","vb.bad","vb.genuse"].forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
+    session = null; toast("学習記録を消去しました"); go("study");
+  };
+}
+
+/* ---------- データ（スマホ内の IndexedDB に保存） ---------- */
+// 単語データはアプリに含めず、利用者が持っているデータファイルを最初に一度だけ読み込む。
+const IDB = {
+  open(){ return new Promise((ok, ng) => { const r = indexedDB.open("vocab", 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("kv"); r.onsuccess = () => ok(r.result); r.onerror = () => ng(r.error); }); },
+  async get(k){ const db = await this.open(); return new Promise((ok, ng) => { const r = db.transaction("kv").objectStore("kv").get(k); r.onsuccess = () => ok(r.result); r.onerror = () => ng(r.error); }); },
+  async putMany(obj){ const db = await this.open(); return new Promise((ok, ng) => { const t = db.transaction("kv", "readwrite"), s = t.objectStore("kv");
+    for (const k in obj) s.put(obj[k], k); t.oncomplete = () => ok(); t.onerror = () => ng(t.error); t.onabort = () => ng(t.error); }); },
+  async clear(){ const db = await this.open(); return new Promise((ok, ng) => { const t = db.transaction("kv", "readwrite"); t.objectStore("kv").clear(); t.oncomplete = () => ok(); t.onerror = () => ng(t.error); }); }
+};
+let AUDIO_URL = {}, PACK_INFO = null;
+function applyPack(head){
+  DATA = {}; head.sections.forEach(j => DATA[j.section] = j);
+  META = head.meta; TIMES = head.timings || {};
+  PACK_INFO = {imported: head.imported, sections: head.sections.length};
+}
+async function loadData(){
+  try{
+    const head = await IDB.get("head");
+    if (!head){ LOAD = "none"; return render(); }
+    applyPack(head);
+    Object.values(AUDIO_URL).forEach(u => URL.revokeObjectURL(u)); AUDIO_URL = {};
+    for (const sec of Object.keys(head.audio || {})){
+      const b = await IDB.get("audio:" + sec); if (b) AUDIO_URL[sec] = URL.createObjectURL(b);
+    }
+    AUDIO_SECS = new Set(Object.keys(AUDIO_URL).map(Number));
+    LOAD = "ok";
+  }catch(e){ console.error(e); LOAD = "error"; }
+  render();
+}
+async function importPack(file, onStep){
+  const buf = await file.arrayBuffer();
+  const magic = new TextDecoder().decode(new Uint8Array(buf, 0, 8));
+  if (magic !== "VOCPACK1") throw new Error("format");
+  const n = new DataView(buf).getUint32(8, true);
+  const head = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 12, n)));
+  if (!Array.isArray(head.sections) || !head.audio) throw new Error("format");
+  onStep("音声を保存しています…");
+  const base = 12 + n, put = {};
+  for (const [sec, [off, len]] of Object.entries(head.audio))
+    put["audio:" + sec] = new Blob([buf.slice(base + off, base + off + len)], {type: "audio/mpeg"});
+  head.imported = Date.now();
+  put.head = {...head, audio: Object.fromEntries(Object.keys(head.audio).map(k => [k, true]))};
+  onStep("単語データを保存しています…");
+  await IDB.clear(); await IDB.putMany(put);
+  try{ await navigator.storage?.persist?.(); }catch(e){}
+}
+
+/* ---------- オフライン対応 ---------- */
+if ("serviceWorker" in navigator && location.protocol !== "file:")
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+
+render();
+loadData();
+</script>
+</body>
+</html>
