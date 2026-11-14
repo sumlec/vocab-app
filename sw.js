@@ -1,6 +1,6 @@
 // オフライン用：アプリ本体（画面・アイコン）とフォントを端末にキャッシュする。
 // 単語データはここでは扱わない（IndexedDB に保存）。アプリを更新したら VERSION を上げる。
-const VERSION = "app-v2";
+const VERSION = "app-v3";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => {

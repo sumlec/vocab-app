@@ -88,6 +88,7 @@ ol.senses{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:4px
 .grades .g1{border-color:var(--again)} .grades .g1 b{color:var(--again)}
 .grades .g2 b{color:var(--hard)} .grades .g3 b{color:var(--good)} .grades .g4 b{color:var(--easy)}
 .reveal{width:100%}
+.resume{display:flex;flex-direction:column;gap:8px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:10px 12px}
 .plan{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
 .plan>div{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
 .plan .num{margin-left:auto}
@@ -95,7 +96,10 @@ ol.senses{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:4px
 .sent.gen{border-left-style:dashed;background:transparent;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
 .ja-big{font-size:17px;font-weight:500}
 ul.hw{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
-ul.hw li{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:5px}
+ul.hw li{display:flex;flex-direction:column;gap:3px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.hw-main{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.blue-ex{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;padding-left:1.2em}
+.blue-ex .tag{font-size:11px;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:0 5px;line-height:1.5}
 .miss{font-size:11px;font-weight:700;color:var(--again);border:1px solid var(--again);border-radius:999px;padding:0 7px}
 .okng{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .okng button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:10px 4px;cursor:pointer;font-size:16px;line-height:1.3}
@@ -176,7 +180,7 @@ function playSentence(sec, sid, text){
   const src = audioSrc(sec, sid);
   if (!src){ speak(text); return; }
   const [, a, b] = TIMES[sid];
-  const start = () => { player.currentTime = a; stopAt = b;
+  const start = () => { player.currentTime = Math.max(0, a - 0.3); stopAt = b;   // 頭が切れないよう0.3秒前の無音から
     player.play().then(() => requestAnimationFrame(watchStop)).catch(() => { stopAt = null; toast("音声を再生できませんでした。読み上げで代用します"); speak(text); }); };
   if (player.src !== src){ player.src = src; player.preload = "auto"; player.addEventListener("loadedmetadata", start, {once:true}); player.load(); }
   else start();
@@ -211,6 +215,12 @@ function buildCards(){
   return cards;
 }
 const keySense = e => e.senses.find(x => x.rank === "key") || e.senses[0];
+// 例文で使われている表現：関連語の行が青字（例：remind A of B）なら、それも返す
+const blueRelated = e => (e.related || []).flatMap(r => r.senses.filter(x => x.rank === "key").map(x => ({w: r.word, pos: r.pos, ja: x.ja})));
+function blueLines(e){
+  const rel = blueRelated(e);
+  return rel.map(x => `<div class="blue-ex"><span class="tag">例文では</span><span class="en-list"><b>${esc(x.w)}</b></span><span class="key">${esc(x.ja)}</span></div>`).join("");
+}
 const senseLine = x => `${x.label ? `<span class="lbl">${esc(x.label)}</span>` : ""}${x.frame ? esc(x.frame) : ""}<span class="${x.rank||""}">${esc(x.ja)}</span>`;
 // 例文の和訳がOKになったら、その例文の見出し語の STEP3 カードを解放
 const unlocked = c => c.step === 1 || PROG[c.sentId]?.last === "ok";
@@ -288,6 +298,32 @@ function step3Plan(seconds, secs, skipToday){
 }
 const mins = s => s <= 0 ? 0 : Math.max(1, Math.round(s / 60));
 const extraSecs = () => passDone() && LAP.lastSecs?.length ? LAP.lastSecs : todaySecs();
+// 中断・再開：出題キュー（カードID）と位置・経過時間を保存しておき、あとから続きを再開できるようにする
+function cardById(id, all){
+  const m = /^(\d+):(\d+):hw$/.exec(id);
+  if (m){
+    const sec = +m[1], no = +m[2], s = DATA[sec]?.sentences.find(s => s.entries.some(e => e.no === no));
+    const e = s?.entries.find(e => e.no === no);
+    return e ? {sec, s, e, id, kind:"hw", step:1, group:`${sec}:${no}`, miss: MISS[`${sec}:${no}`]?.n || 1} : null;
+  }
+  return all.get(id) || null;
+}
+function saveSession(){
+  if (!session){ try{ localStorage.removeItem("vb.session"); }catch(e){} return; }
+  LS.set("vb.session", {phase: session.phase, secs: session.secs, q: session.q.map(c => c.id), i: session.i,
+    budget: session.budget, elapsed: Math.round((Date.now() - session.start) / 1000), day: today()});
+}
+const savedSession = () => { const s = LS.get("vb.session", null); return s && s.q && s.i < s.q.length ? s : null; };
+function resumeSession(){
+  const sv = savedSession(); if (!sv) return;
+  const all = new Map(buildCards().map(c => [c.id, c]));
+  const q = sv.q.map(id => cardById(id, all)).filter(Boolean);
+  session = {phase: sv.phase, secs: sv.secs, q, i: Math.min(sv.i, q.length - 1), stage:"q", picked:new Set(), played:-1,
+             start: Date.now() - sv.elapsed * 1000, budget: sv.budget};
+  if (!q.length){ session = null; saveSession(); toast("再開できる学習がありません"); }
+  render();
+}
+function finishSession(msg){ session = null; saveSession(); if (msg) toast(msg); render(); }
 function startSession(withSentences){
   const now = Date.now();
   if (withSentences){
@@ -297,7 +333,7 @@ function startSession(withSentences){
     session = {phase:2, secs: extraSecs(), q: step3Plan(SET.extraMinutes * 60, extraSecs(), true).q, i:0, stage:"q", picked:new Set(), played:-1, start:now, budget: SET.extraMinutes * 60};
   }
   if (!session.q.length){ session = null; toast("出題できるカードがありません"); }
-  render();
+  saveSession(); render();
 }
 function endPhase1(){
   LAP.prev = {next: LAP.next, lap: LAP.lap};   // 「今日をやり直す」用
@@ -307,7 +343,7 @@ function endPhase1(){
   LAP.doneDay = today(); LAP.lastSecs = secs; saveLap();
   const left = session.budget - (Date.now() - session.start) / 1000;
   const q = step3Plan(Math.max(0, left), secs, true).q;   // ①で出した語は今日はもう出さない
-  if (!q.length){ session = null; toast("今日の学習が終わりました"); return render(); }
+  if (!q.length) return finishSession("今日の学習が終わりました");
   toast("例文が終わりました。派生語・関連語などに進みます");
   Object.assign(session, {phase:2, q, i:0, stage:"q"});
   renderCard();
@@ -364,11 +400,17 @@ function renderHome(){
   const p3 = step3Plan(Math.max(0, SET.minutes * 60 - sentSec), secs, false);
   const done = passDone();
   const extra = step3Plan(SET.extraMinutes * 60, extraSecs(), true);
+  const sv = savedSession();
+  const resume = sv ? `<div class="resume">
+      <div><b>中断した学習があります</b><span class="muted small">　${sv.phase === 1 ? "①例文" : "②派生語など"} ${sv.i + 1}/${sv.q.length}枚目・経過 ${Math.floor(sv.elapsed/60)}分${sv.day !== today() ? `・${dayLabel(sv.day)} の学習` : ""}</span></div>
+      <div class="row"><button class="btn primary" id="resume">続きから再開</button><button class="btn small" id="discard">破棄する</button></div>
+    </div>` : "";
   view.innerHTML = `<section class="panel">
     ${SET.debug ? `<div class="debug"><div>デバッグ：いまの日付は ${dayLabel(today())}${DAYOFF ? `（実際の今日から +${DAYOFF}日）` : ""}</div>
       <div class="row" style="margin-top:6px"><button class="btn small" id="dbgNext">翌日へ進める</button><button class="btn small" id="dbgRedo">今日をやり直す</button>${DAYOFF ? `<button class="btn small" id="dbgBack">実際の今日に戻す</button>` : ""}<button class="btn small" id="dbgReset">履歴をクリアして最初に戻る</button></div>
       <div class="row small" id="dbgConfirm" hidden style="margin-top:6px"><span>学習記録・苦手な語・周回・日付をすべて消して、初日の状態に戻します。元に戻せません。</span>
         <button class="btn small" id="dbgResetYes" style="border-color:var(--again);color:var(--again)">消して最初に戻る</button><button class="btn small" id="dbgResetNo">やめる</button></div></div>` : ""}
+    ${resume}
     <div class="meta"><span class="chip">第${LAP.lap}周</span><span>${lapDays}日で1周</span><span class="num" style="margin-left:auto">収録 ${loadedSecs().length} Section</span></div>
     ${done ? `<h2 style="font-size:16px;margin:0">今日の学習は終わりました</h2>
       <p class="muted small" style="margin:0">次回は Section ${todaySecs().join("・")} から始まります。</p>
@@ -381,6 +423,8 @@ function renderHome(){
     <p class="muted small" style="margin:0">例文の和訳が OK になると、その例文の派生語・関連語・同意語・反意語が②に出るようになります。②は前回NGだったカードを優先し、枚数は、残り時間とこれまでの解答ペース（例文 ${Math.round(AVG.sent)}秒/文、派生語など ${Math.round(AVG.s3)}秒/枚）から自動で決まります。</p>
   </section>`;
   const st = document.getElementById("start"); if (st) st.onclick = () => startSession(true);
+  const rs2 = document.getElementById("resume"); if (rs2) rs2.onclick = resumeSession;
+  const dc = document.getElementById("discard"); if (dc) dc.onclick = () => { session = null; saveSession(); toast("中断していた学習を破棄しました"); renderHome(); };
   const setOff = n => { DAYOFF = n; LS.set("vb.dayOffset", DAYOFF); renderHome(); };
   const dn = document.getElementById("dbgNext"); if (dn) dn.onclick = () => { setOff(DAYOFF + 1); toast(`${dayLabel(today())} の学習に切り替えました`); };
   const db = document.getElementById("dbgBack"); if (db) db.onclick = () => { setOff(0); toast("実際の今日に戻しました"); };
@@ -391,13 +435,13 @@ function renderHome(){
     document.getElementById("dbgResetYes").onclick = () => {
       PROG = {}; MISS = {}; GENUSE = {}; DAYLOG = {}; DAYOFF = 0;
       LAP = {next:1, lap:1, doneDay:null, lastSecs:[]}; AVG = {sent:12, s3:12};
-      save(); saveLap(); LS.set("vb.dayOffset", 0); session = null;
+      save(); saveLap(); LS.set("vb.dayOffset", 0); session = null; saveSession();
       toast("履歴をクリアして最初の状態に戻しました"); renderHome();
     };
   }
   const dr = document.getElementById("dbgRedo"); if (dr) dr.onclick = () => {
     if (LAP.doneDay === today() && LAP.prev){ LAP.next = LAP.prev.next; LAP.lap = LAP.prev.lap; }
-    LAP.doneDay = null; saveLap(); renderHome(); toast("今日の例文パートをやり直せるようにしました（カードの記録は残ります）");
+    LAP.doneDay = null; saveLap(); session = null; saveSession(); renderHome(); toast("今日の例文パートをやり直せるようにしました（カードの記録は残ります）");
   };
   const ex = document.getElementById("extra"); if (ex) ex.onclick = () => startSession(false);
 }
@@ -472,10 +516,11 @@ function answer(c){
       return `<div class="ja-big">${esc(c.s.ja)}</div>
         <ul class="hw">${c.s.entries.map(x => {
           const m = MISS[`${c.sec}:${x.no}`]?.n || 0;
-          return `<li><span class="num">□${x.no}</span><span class="en-list"><b>${esc(x.word)}</b></span><span>${esc(keySense(x).ja)}</span>${m ? `<span class="miss">苦手 ×${m}</span>` : ""}</li>`;
+          const rel = blueRelated(x);
+          return `<li><div class="hw-main"><span class="num">□${x.no}</span><span class="en-list"><b>${esc(x.word)}</b></span><span class="${rel.length ? "" : "key"}">${esc(keySense(x).ja)}</span>${m ? `<span class="miss">苦手 ×${m}</span>` : ""}</div>${blueLines(x)}</li>`;
         }).join("")}</ul>`;
     case "hw":
-      return headBlock(e.word, e.pron, e.kana) + senses(e.senses.map(x=>({...x, pos:e.pos}))) +
+      return headBlock(e.word, e.pron, e.kana) + senses(e.senses.map(x=>({...x, pos:e.pos}))) + blueLines(e) +
         `${e.core ? `<div class="core">【${esc(e.core)}】</div>` : ""}${e.note ? `<div class="core">《${esc(e.note)}》</div>` : ""}` +
         `<div class="sent"><div class="en">${markSentence(c.s)} <button class="speak" data-sent="1">▶ 例文</button></div><div class="ja">${esc(c.s.ja)}</div></div>`;
     case "bold":
@@ -501,7 +546,8 @@ const KIND = {hw:"苦手な見出し語", gen:"新しい英文の和訳", sent:"
 
 function renderCard(){
   const c = session.q[session.i];
-  if (!c){ session = null; toast("今日の学習が終わりました"); return render(); }
+  if (!c) return finishSession("今日の学習が終わりました");
+  saveSession();   // 表示のたびに保存（アプリを閉じても続きから再開できる）
   const st = c.kind === "gen" ? {} : PROG[c.id];
   let actions;
   if (session.stage === "q"){
@@ -553,7 +599,7 @@ function renderCard(){
   if ($("bad")) $("bad").onclick = () => { BAD[c.item.id] = true; save(); toast("この文は今後出題しません"); advance(); };
   if ($("ok3")) $("ok3").onclick = () => grade(true);
   if ($("ng3")) $("ng3").onclick = () => grade(false);
-  $("quit").onclick = () => { try{ player.pause(); }catch(e){} session = null; render(); };
+  $("quit").onclick = () => { try{ player.pause(); }catch(e){} saveSession(); session = null; toast("中断しました。ホームの「続きから再開」で戻れます"); render(); };
   if (session.stage === "q") session.shownAt = Date.now();
   tick();
   // 例文カードは表示と同時に音声を自動再生
@@ -596,11 +642,10 @@ function advance(){
   session.i++; session.stage = "q"; session.picked = new Set();
   if (session.i >= session.q.length){
     if (session.phase === 1) return endPhase1();
-    session = null; toast("今日の学習が終わりました"); return render();
+    return finishSession("今日の学習が終わりました");
   }
-  if (session.phase === 2 && (Date.now() - session.start) / 1000 > session.budget + 60){
-    session = null; toast(`${SET.minutes}分を過ぎたので終了しました。続きは「追加で」から`); return render();
-  }
+  if (session.phase === 2 && (Date.now() - session.start) / 1000 > session.budget + 60)
+    return finishSession(`${SET.minutes}分を過ぎたので終了しました。続きは「追加で」から`);
   renderCard();
 }
 document.addEventListener("keydown", ev => {
